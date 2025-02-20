@@ -11,7 +11,7 @@ app.use(express.json());
 
 // 启用 CORS
 app.use(cors({
-    origin: 'http://localhost:8000', // 允许的前端域名
+    origin: 'http://localhost:9000', // 允许的前端域名
     credentials: true, // 允许携带凭证
 }));
 

@@ -10,7 +10,7 @@ import { Article } from '../../typings'; // 导入类型
 const searchPosts = async (params: Article) => {
   console.log('searchPosts called with params:', params);
   try {
-    const response = await axios.get(`${apiConfig.API_BASE_URL}/api/posts`, {
+    const response = await axios.get(`/api/posts`, {
       params,
     });
     return {
@@ -190,13 +190,11 @@ const Posts: React.FC = () => {
                         title: '分类',
                         dataIndex: 'categories',
                         search: true,
-                        render: (text) => text.join(', '),
                     },
                     {
                         title: '标签',
                         dataIndex: 'tags',
                         search: true,
-                        render: (text) => text.join(', '),
                     },
                     {
                         title: '操作',
