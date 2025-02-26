@@ -7,10 +7,11 @@ import React, { useState } from 'react';
 import apiConfig from '../../../config/apiConfig';
 import { Article } from '../../typings'; // 导入类型
 
+//查询文章列表
 const searchPosts = async (params: Article) => {
   console.log('searchPosts called with params:', params);
   try {
-    const response = await axios.get(`/api/posts`, {
+      const response = await axios.get(`/api/article/query`, {
       params,
     });
     return {
@@ -83,40 +84,36 @@ const Posts: React.FC = () => {
         setIsModalVisible(true);
     };
     const handleOk = () => {
-        form
-            .validateFields()
-            .then((values) => {
-                if (currentRecord) {
-                    // 编辑操作
-                    axios
-                        .put(`${apiConfig.API_BASE_URL}/api/posts/${currentRecord.id}`, values)
-                        .then(() => {
-                            message.success('编辑成功');
-                            setIsModalVisible(false);
-                            setTableVersion(tableVersion + 1);
-                        })
-                        .catch((error) => {
-                            console.error('Error updating post:', error);
-                            message.error('编辑失败，请稍后再试。' + error);
-                        });
-                } else {
-                    // 新增操作
-                    axios
-                        .post(`${apiConfig.API_BASE_URL}/api/posts`, values)
-                        .then(() => {
-                            message.success('创建成功');
-                            setIsModalVisible(false);
-                            setTableVersion(tableVersion + 1);
-                        })
-                        .catch((error) => {
-                            console.error('Error creating post:', error);
-                            message.error('创建失败，请稍后再试。');
-                        });
-                }
-            })
-            .catch((info) => {
-                console.log('Failed:', info);
-            });
+        form.validateFields().then((values) => {
+            if (currentRecord) {
+                // 编辑操作
+                axios.put(`/api/article/updateArticle/${currentRecord.id}`, values)
+                    .then(() => {
+                        message.success('编辑成功');
+                        setIsModalVisible(false);
+                        setTableVersion(tableVersion + 1);
+                    })
+                    .catch((error) => {
+                        console.error('Error updating post:', error);
+                        message.error('编辑失败，请稍后再试。' + error);
+                    });
+            } else {
+                // 新增操作
+                axios.post(`/api/article/saveArticle`, values)
+                    .then(() => {
+                        message.success('创建成功');
+                        setIsModalVisible(false);
+                        setTableVersion(tableVersion + 1);
+                    })
+                    .catch((error) => {
+                        console.error('Error creating post:', error);
+                        message.error('创建失败，请稍后再试。');
+                    });
+            }
+        })
+        .catch((info) => {
+            console.log('Failed:', info);
+        });
     };
     const handleCancel = () => {
         setIsModalVisible(false);

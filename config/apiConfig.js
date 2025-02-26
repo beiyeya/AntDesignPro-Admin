@@ -1,5 +1,5 @@
 const apiConfig = {
-  API_BASE_URL: 'http://localhost:3000',
+  API_BASE_URL: 'http://localhost:9000',
 };
 
 export default apiConfig;
